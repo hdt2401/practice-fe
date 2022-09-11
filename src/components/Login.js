@@ -4,6 +4,15 @@ import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import AuthService from "../services/auth.service";
 import { useNavigate } from 'react-router-dom';
+const required = (value) => {
+  if (!value) {
+    return (
+      <div className="invalid-feedback d-block">
+        This field is required!
+      </div>
+    )
+  }
+}
 
 function Login(props) {
   const navigate = useNavigate();
@@ -13,15 +22,7 @@ function Login(props) {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
-  const require = (value) => {
-    if (!value) {
-      return (
-        <div className="invalid-feedback d-block">
-          This field is require!
-        </div>
-      )
-    }
-  }
+  
   const onChangeUsername = (e) => {
     const username = e.target.value;
     setUsername(username);
@@ -36,7 +37,7 @@ function Login(props) {
     setMessage("");
     setLoading(true);
     form.current.validateAll();
-    if (checkBtn.current.context._error.length === 0) {
+    if (checkBtn.current.context._errors.length === 0) {
       AuthService.login(username, password)
         .then(
           () => {
@@ -71,7 +72,7 @@ function Login(props) {
               name="username"
               value={username}
               onChange={onChangeUsername}
-              validations={[require]}
+              validations={[required]}
             />
           </div>
           <div className="form-group">
@@ -82,7 +83,7 @@ function Login(props) {
               name="password"
               value={password}
               onChange={onChangePassword}
-              validations={[require]}
+              validations={[required]}
             />
           </div>
           <div className="form-group">
