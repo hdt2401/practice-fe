@@ -7,6 +7,7 @@ const BoardAdmin = () => {
     UserService.getAdminBoard().then(
       (response) => {
         setContent(response.data);
+        console.log("data", response.data);
       },
       (error) => {
         const _content =

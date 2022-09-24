@@ -58,11 +58,11 @@ function Login(props) {
   return (
     <div className="col-md-12">
       <div className="card card-container">
-        <img
+        {/* <img
           src="https://cianmaggs.github.io/google-homepage/images/loginbutton.png"
           alt="avatar logo"
           className="profile-img-top"
-        />
+        /> */}
         <Form className="form form-login" onSubmit={handleLogin} ref={form}>
           <div className="form-group">
             <label htmlFor="username">Username</label>

@@ -87,11 +87,11 @@ const Register = (props) => {
   return (
     <div className="col-md-12">
       <div className="card card-container">
-        <img
+        {/* <img
           src="https://cianmaggs.github.io/google-homepage/images/loginbutton.png"
           alt="profile-img"
           className="profile-img-card"
-        />
+        /> */}
         <Form onSubmit={handleRegister} ref={form}>
           {!successful && (
             <div>
