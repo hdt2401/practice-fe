@@ -7,14 +7,14 @@ const getCategories = () => {
 const getCategoriesWithKeyword = () => {
   return axios.get(API_URL + "/:name");
 };
-const createCategory = () => {
-  return axios.post(API_URL + "/create");
+const createCategory = async (data) => {
+  return await axios.post(API_URL + "/create", data);
 };
 const updateCategory = () => {
   return axios.put(API_URL + "/update/:id");
 };
-const lockCategory = () => {
-  return axios.get(API_URL + "/lock/:id");
+const lockCategory = (id) => {
+  return axios.put(API_URL + "/lock/" + id);
 };
 const unlockCategory = () => {
   return axios.get(API_URL + "/unlock/:id");
