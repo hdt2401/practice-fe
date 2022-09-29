@@ -5,24 +5,48 @@ import { Link } from "react-router-dom";
 
 function Index(props) {
   const [categories, setCategories] = useState([]);
+  const [update, setUpdate] = useState(true);
 
   useEffect(() => {
-    CategoryService.getCategories()
+    function fetchData(){
+      CategoryService.getCategories()
       .then(data => {
         setCategories(data.data);
       })
-      .then(err => {
+      .catch(err => {
         console.log(err);
-      })
-  }, [])
-  console.log(categories);
+      });
+    }
+    fetchData();
+  }, [update])
   // const 
-  const handleLock = (id) => {
-    CategoryService.lockCategory(id)
-      .then((data)=>console.log(data.message))
-      .catch(err=>console.log(err))
-  }
+  const handleLock = (category) => {
+    const id = category.id;
+    const name = category.name;
+    let result = window.confirm(`Are you sure to lock ${name}?`);
 
+    if (result){
+      CategoryService.lockCategory(id)
+        .then(() => {
+          setUpdate(!update)
+        })
+        .catch(err => console.log(err))
+    }
+  }
+  const handleUnLock = (category) => {
+    const id = category.id;
+    const name = category.name;
+    let result = window.confirm(`Are you sure to unlock ${name}?`);
+
+    if (result){
+      CategoryService.unlockCategory(id)
+        .then(() => {
+          setUpdate(!update)
+        })
+        .catch(err => console.log(err))
+    }
+  }
+  console.log(update);
   return (
     <>
       <h2 className="page-title">Manage Categories</h2>
@@ -45,12 +69,18 @@ function Index(props) {
             (
               <tr key={index}>
                 <td>{index + 1}</td>
-                <td>{category.name}</td>
+                <td>
+                  <Link to={`/categories/${category.id}`}>{category.name}</Link>
+                </td>
                 <td>{category.desc}</td>
                 <td>{moment(category.createdAt).format('DD-MM-YYYY, h:mm:ss a')}</td>
                 <td>{moment(category.updatedAt).format('DD-MM-YYYY, h:mm:ss a')}</td>
                 <td>
-                  <button className='btn btn-danger' onClick={() => handleLock(category.id)}>Lock</button>
+                  {
+                    category.status === true ? (<button className='btn btn-danger' onClick={() => handleLock(category)}>Lock</button>)
+                      : (<button className='btn btn-success' onClick={() => handleUnLock(category)}>UnLock</button>)
+                  }
+
                 </td>
 
               </tr>

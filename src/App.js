@@ -13,6 +13,7 @@ import BoardModerator from "./components/BoardModerator";
 import BoardAdmin from "./components/BoardAdmin";
 import Categories from "./pages/Category";
 import CreateCategory from "./pages/Category/CreateCategory";
+import DetailCategory from "./pages/Category/DetailCategory";
 const App = () => {
   const [showModeratorBoard, setShowModeratorBoard] = useState(false);
   const [showAdminBoard, setShowAdminBoard] = useState(false);
@@ -107,6 +108,7 @@ const App = () => {
           <Route path="/admin" element={<BoardAdmin/>} />
           <Route path="/categories" element={<Categories/>} />
           <Route path="/CreateCategory" element={<CreateCategory/>} />
+          <Route path="/categories/:id" element={<DetailCategory/>} />
         </Routes>
       </div>
     </div>
